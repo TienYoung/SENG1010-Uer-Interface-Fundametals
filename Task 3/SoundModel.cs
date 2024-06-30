@@ -30,23 +30,6 @@ namespace Task_3
             Filename = filename;
         }
 
-        static SoundModel[] LoadSoundsFromDirectory(string directory)
-        {
-            string[] mp3Files = Directory.GetFiles(directory, "*.mp3");
-            SoundModel[] soundModels = new SoundModel[mp3Files.Length];
-            int i = 0;
-            foreach (string filename in mp3Files)
-            {
-                using (var mp3 = new Mp3(filename))
-                {
-                    Id3Tag tag = mp3.GetTag(Id3TagFamily.Version2X);
-                    soundModels[i] = new SoundModel(tag.Artists, tag.Album, tag.Track, tag.Title, filename);
-                }
-            }
-
-            return soundModels;
-        }
-
         public static SoundModel[] LoadSoundsViaDialog()
         {
             OpenFileDialog openFileDialog = new OpenFileDialog();

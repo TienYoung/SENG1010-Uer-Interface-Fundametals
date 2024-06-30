@@ -22,5 +22,17 @@ namespace Task_3
         {
             InitializeComponent();
         }
+
+        private void Grid_MouseLeftButtonUp(object sender, MouseButtonEventArgs e)
+        {
+            if (DataContext is SoundViewModel soundViewModel && soundViewModel.ImportCommand.CanExecute(null))
+            {
+                soundViewModel.ImportCommand.Execute(null);
+                if (sender is Grid grid)
+                {
+                    grid.Visibility = Visibility.Collapsed;
+                }
+            }
+        }
     }
 }

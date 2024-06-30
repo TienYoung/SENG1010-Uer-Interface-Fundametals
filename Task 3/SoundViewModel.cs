@@ -70,6 +70,7 @@ namespace Task_3
         }
 
         public ICommand ImportCommand { get; }
+        public ICommand RenameCommand { get; }
 
         public class RelayCommand : ICommand
         {
@@ -108,6 +109,8 @@ namespace Task_3
             { 
                 Sounds = new ObservableCollection<SoundModel>(SoundModel.LoadSoundsViaDialog()); 
             });
+
+            RenameCommand = new RelayCommand((object? parameter) => { });
         }
 
         public event PropertyChangedEventHandler? PropertyChanged;
