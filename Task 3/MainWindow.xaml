@@ -1,0 +1,31 @@
+﻿<Window x:Class="Task_3.MainWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:Task_3"
+        mc:Ignorable="d"
+        Title="MainWindow" Height="450" Width="800">
+    <Window.DataContext>
+        <local:SoundViewModel/>
+    </Window.DataContext>
+    <Grid>
+        <StackPanel Orientation ="Vertical">
+            <StackPanel Orientation =" Horizontal">
+                <Label Content = "Name Pattern:"/>
+                <TextBox Text ="direct" Width ="400" VerticalAlignment="Center"/>
+                <Button Content ="Confirm" HorizontalAlignment="Right" Command="{Binding ImportCommand}"/>
+            </StackPanel>
+            <DataGrid Name ="DG_Sounds" ItemsSource ="{Binding Sounds}" AutoGenerateColumns="False">
+                <DataGrid.Columns>
+                    <DataGridTextColumn Header="Artist" Binding="{Binding Artist}"/>
+                    <DataGridTextColumn Header="Album" Binding="{Binding Album}"/>
+                    <DataGridTextColumn Header="Track" Binding="{Binding Track}"/>
+                    <DataGridTextColumn Header="Title" Binding="{Binding Title}"/>
+                    <DataGridTextColumn Header="Filename" Binding="{Binding Filename}"/>
+                    <DataGridTextColumn Header="New Name"/>
+                </DataGrid.Columns>
+            </DataGrid>
+        </StackPanel>
+    </Grid>
+</Window>
