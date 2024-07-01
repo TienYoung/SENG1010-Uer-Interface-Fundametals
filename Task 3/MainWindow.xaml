@@ -15,11 +15,20 @@
             <RowDefinition Height="Auto"/>
             <RowDefinition Height="*"/>
         </Grid.RowDefinitions>
-        <StackPanel Orientation="Horizontal" Grid.Row="0">
-            <Label Content="Name Pattern:"/>
-            <TextBox Text="pattern" Width="400" VerticalAlignment="Center"/>
-            <Button Content="Confirm" HorizontalAlignment="Right" Command="{Binding ImportCommand}"/>
-        </StackPanel>
+        <Grid Grid.Row="0">
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="auto"/>
+                <ColumnDefinition Width="*"/>
+                <ColumnDefinition Width="auto"/>
+            </Grid.ColumnDefinitions>
+            <Label Grid.Column="0" 
+                   Content="Name Pattern:"/>
+            <TextBox Grid.Column="1" 
+                     Text="&lt;Artist&gt;-&lt;Titile&gt;-name"
+                     VerticalContentAlignment="Center"/>
+            <Button Grid.Column="2" 
+                    Content="Confirm" Command="{Binding ImportCommand}"/>
+        </Grid>
         <DataGrid Grid.Row="1" ItemsSource ="{Binding Sounds}" AutoGenerateColumns="False">
             <DataGrid.Columns>
                 <DataGridTextColumn Header="Artist" Binding="{Binding Artist}"/>
@@ -31,10 +40,8 @@
             </DataGrid.Columns>
         </DataGrid>
         <Grid Grid.Row="2" MouseLeftButtonUp="Grid_MouseLeftButtonUp" Background="White">
-            <Label
-               Content="Drag and Drop or Click here!"
-               HorizontalAlignment="Center"
-               VerticalAlignment="Center" 
+            <Label Content="Drag and Drop or Click here!"
+               HorizontalAlignment="Center" VerticalAlignment="Center" 
                FontSize="24"/>
         </Grid>
     </Grid>

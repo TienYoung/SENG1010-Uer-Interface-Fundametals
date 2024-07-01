@@ -4,7 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.IO;
-using Id3;
+using TagLib;
 using Microsoft.Win32;
 
 namespace Task_3
@@ -15,13 +15,13 @@ namespace Task_3
 
         public string? Album { get; set; }
 
-        public int Track { get; set; }
+        public uint Track { get; set; }
 
         public string? Title { get; set; }
 
         public string? Filename { get; set; }
 
-        public SoundModel(string? artist, string? album, int track, string? title, string? filename)
+        public SoundModel(string? artist, string? album, uint track, string? title, string? filename)
         {
             Artist = artist;
             Album = album;
@@ -48,10 +48,10 @@ namespace Task_3
                 string filename = openFileDialog.FileNames[i];
                 string safename = openFileDialog.SafeFileNames[i];
 
-                using (var mp3 = new Mp3(filename))
+                using (var mp3 = TagLib.File.Create(filename))
                 {
-                    Id3Tag tag = mp3.GetTag(Id3TagFamily.Version2X);
-                    smList.Add(new SoundModel(tag.Artists, tag.Album, tag.Track, tag.Title, safename));
+                    var tag = mp3.Tag;
+                    smList.Add(new SoundModel(tag.FirstPerformer, tag.Album, tag.Track, tag.Title, safename));
                 }
             }
 
