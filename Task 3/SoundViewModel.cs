@@ -74,7 +74,13 @@ namespace Task_3
                 }
             });
 
-            RenameCommand = new RelayCommand((object? parameter) => { });
+            RenameCommand = new RelayCommand((object? parameter) => 
+            {
+                foreach (var soundModel in Sounds)
+                {
+                    soundModel.Rename(soundModel.NewName ?? String.Empty);
+                }
+            });
 
             pattern = "<Artist>-<Title>-name";
         }

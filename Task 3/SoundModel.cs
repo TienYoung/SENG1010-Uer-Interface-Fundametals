@@ -20,7 +20,19 @@ namespace Task_3
 
         public string? Title { get; }
 
-        public string? Filename { get; }
+        private string? filename;
+        public string? Filename
+        {
+            get
+            {
+                return Path.GetFileNameWithoutExtension(filename);
+            }
+            private set
+            {
+                filename = value;
+                OnPropertyChanged(nameof(Filename));
+            }
+        }
 
         private string? newName;
         public string? NewName
@@ -50,6 +62,17 @@ namespace Task_3
                 .Replace("<Title>", Title);
         }
 
+        public void Rename(string newName)
+        {
+            if (String.IsNullOrEmpty(newName)) return;
+
+            string path = Path.GetDirectoryName(filename) ?? String.Empty;
+            string extension = Path.GetExtension(filename ?? String.Empty);
+            newName = Path.Combine(path, newName + extension);
+            System.IO.File.Move(filename ?? String.Empty, newName);
+            Filename = newName;
+        }
+
         public static SoundModel[] LoadSoundsViaDialog()
         {
             OpenFileDialog openFileDialog = new OpenFileDialog();
@@ -63,15 +86,12 @@ namespace Task_3
             }
 
             List<SoundModel> smList = new List<SoundModel>();
-            for (int i = 0; i < openFileDialog.FileNames.Length; i++)
+            foreach (var filename in openFileDialog.FileNames)
             {
-                string filename = openFileDialog.FileNames[i];
-                string safename = openFileDialog.SafeFileNames[i];
-
                 using (var mp3 = TagLib.File.Create(filename))
                 {
                     var tag = mp3.Tag;
-                    smList.Add(new SoundModel(tag.FirstPerformer, tag.Album, tag.Track, tag.Title, safename));
+                    smList.Add(new SoundModel(tag.FirstPerformer, tag.Album, tag.Track, tag.Title, filename));
                 }
             }
 

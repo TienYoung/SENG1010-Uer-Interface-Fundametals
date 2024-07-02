@@ -34,7 +34,7 @@
                 Text="{Binding Pattern, UpdateSourceTrigger=PropertyChanged}" />
             <Button
                 Grid.Column="2"
-                Command="{Binding ImportCommand}"
+                Command="{Binding RenameCommand}"
                 Content="Confirm" />
         </Grid>
         <DataGrid
