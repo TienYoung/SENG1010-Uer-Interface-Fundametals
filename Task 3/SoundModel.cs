@@ -88,11 +88,8 @@ namespace Task_3
             List<SoundModel> smList = new List<SoundModel>();
             foreach (var filename in openFileDialog.FileNames)
             {
-                using (var mp3 = TagLib.File.Create(filename))
-                {
-                    var tag = mp3.Tag;
-                    smList.Add(new SoundModel(tag.FirstPerformer, tag.Album, tag.Track, tag.Title, filename));
-                }
+                Tag tag = TagLib.File.Create(filename).GetTag(TagTypes.Id3v2);
+                smList.Add(new SoundModel(tag.FirstPerformer, tag.Album, tag.Track, tag.Title, filename));
             }
 
             return smList.ToArray();
