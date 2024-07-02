@@ -50,7 +50,7 @@ namespace Task_3
 
             IntPtr hWnd = new WindowInteropHelper(GetWindow(this)).EnsureHandle();
             var attribute = DWMWINDOWATTRIBUTE.DWMWA_WINDOW_CORNER_PREFERENCE;
-            var preference = DWM_WINDOW_CORNER_PREFERENCE.DWMWCP_ROUNDSMALL;
+            var preference = DWM_WINDOW_CORNER_PREFERENCE.DWMWCP_DONOTROUND;
             DwmSetWindowAttribute(hWnd, attribute, ref preference, sizeof(uint));
         }
 
