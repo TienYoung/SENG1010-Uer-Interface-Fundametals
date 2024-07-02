@@ -6,28 +6,48 @@ using System.Threading.Tasks;
 using System.IO;
 using TagLib;
 using Microsoft.Win32;
+using System.ComponentModel;
 
 namespace Task_3
 {
-    class SoundModel
+    class SoundModel : INotifyPropertyChanged
     {
-        public string? Artist { get; set; }
+        public string? Artist { get; }
 
-        public string? Album { get; set; }
+        public string? Album { get; }
 
-        public uint Track { get; set; }
+        public uint? Track { get; }
 
-        public string? Title { get; set; }
+        public string? Title { get; }
 
-        public string? Filename { get; set; }
+        public string? Filename { get; }
 
-        public SoundModel(string? artist, string? album, uint track, string? title, string? filename)
+        private string? newName;
+        public string? NewName
+        {
+            get => newName;
+            private set
+            {
+                newName = value;
+                OnPropertyChanged(nameof(NewName));
+            }
+        }
+
+        public SoundModel(string? artist, string? album, uint? track, string? title, string? filename)
         {
             Artist = artist;
             Album = album;
             Track = track;
             Title = title;
             Filename = filename;
+        }
+
+        public void UpdateNewName(string pattern)
+        {
+            NewName = pattern.Replace("<Artist>", Artist)
+                .Replace("<Album>", Album)
+                .Replace("<Track>", Track.ToString())
+                .Replace("<Title>", Title);
         }
 
         public static SoundModel[] LoadSoundsViaDialog()
@@ -56,6 +76,12 @@ namespace Task_3
             }
 
             return smList.ToArray();
+        }
+
+        public event PropertyChangedEventHandler? PropertyChanged;
+        public void OnPropertyChanged(string propertyName)
+        {
+            PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(propertyName));
         }
     }
 }

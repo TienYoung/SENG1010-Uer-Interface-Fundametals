@@ -13,59 +13,19 @@ namespace Task_3
 {
     class SoundViewModel : INotifyPropertyChanged
     {
-        private string? artist;
-        private string? album;
-        private string? track;
-        private string? title;
-        private string? filename;
+        private string pattern;
 
-        public string? Artist
+        public string Pattern
         {
-            get => artist;
-            private set
+            get => pattern;
+            set 
             {
-                artist = value;
-                OnPropertyChanged(nameof(Artist));
-            }
-        }
-
-        public string? Album
-        {
-            get => album;
-            private set
-            {
-                album = value;
-                OnPropertyChanged(nameof(Album));
-            }
-        }
-
-        public string? Track
-        {
-            get => track;
-            private set
-            {
-                track = value;
-                OnPropertyChanged(nameof(Track));
-            }
-        }
-
-        public string? Title
-        {
-            get => title;
-            private set
-            {
-                title = value;
-                OnPropertyChanged(nameof(Title));
-            }
-        }
-
-        public string? Filename
-        {
-            get => filename;
-            private set
-            {
-                filename = value;
-                OnPropertyChanged(nameof(Filename));
+                pattern = value;
+                OnPropertyChanged(nameof(Pattern));
+                foreach (var soundModel in Sounds)
+                {
+                    soundModel.UpdateNewName(Pattern);
+                }
             }
         }
 
@@ -107,10 +67,16 @@ namespace Task_3
         {
             ImportCommand = new RelayCommand((object? parameter) => 
             { 
-                Sounds = new ObservableCollection<SoundModel>(SoundModel.LoadSoundsViaDialog()); 
+                Sounds = new ObservableCollection<SoundModel>(SoundModel.LoadSoundsViaDialog());
+                foreach (var soundModel in Sounds)
+                {
+                    soundModel.UpdateNewName(Pattern);
+                }
             });
 
             RenameCommand = new RelayCommand((object? parameter) => { });
+
+            pattern = "<Artist>-<Title>-name";
         }
 
         public event PropertyChangedEventHandler? PropertyChanged;
